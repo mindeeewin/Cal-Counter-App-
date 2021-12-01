@@ -1,6 +1,7 @@
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: left;
+    padding-top: 25px;
 }
 
 dd{
@@ -24,6 +25,6 @@ h2{
     text-align: center;
     align-items: stretch;
     padding-top: 15px;
-    
+
 
 }

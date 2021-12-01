@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calorie Counter</title>
+    
+        <!-- Custom Styles-->
+        <link rel="stylesheet" href="test.css">
+        
+    </head>
+<body>
+     <!-- Manually Enter Data-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <div class="banner-info" align="center">
+        <span><label>DATE </label></span>
+        <span><input type="text" class="text-center" required="" placeholder="TODAY'S DATE" id="CustName"></span>
+        <span><label>MEAL</label></span>
+        <span><input type="text" class="text-center" required="" placeholder="MEAL #" id="CustAdd"></span>
+        <span><label>CALORIES </label></span>
+        <span><input type="text" class="text-center" required="" placeholder="TOTAL CALORIES" id="CustTel"></span>
+    </div>
+    <!-- "Add" Data Button-->
+    <div class="logo">
+        <input type="button" onClick="insertData()" value="Add">
+    </div>
+     <!-- Calorie Counting Table-->
+    <script language="javascript">
+        function insertData() {
+            $("#TableBody").html($("#TableBody").html() + "<tr><td>" + $("#CustName").val() + "</td><td>" + $("#CustAdd").val() + "</td><td>" + $("#CustTel").val() + "<td><tr>");
+        }
+    </script>
+    <table id="t1">
+        <caption>CALORIE COUNTER</caption>
+        <colgroup>
+            <col span="2" class="c2">
+                <col>
+                    <col class="c1">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    DATE
+                </th>
+                <th>
+                    MEAL
+                </th>
+                <th>
+                    CALORIES
+                </th>
+            </tr>
+            
+        </thead>
+        <tbody id="TableBody">
+        </tbody>
+    </table>
+</body>
+
+</html>
+PLEASE ENTER DATA ABOVE

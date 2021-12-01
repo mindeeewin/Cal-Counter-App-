@@ -7,23 +7,24 @@
         <title>Manual Calorie Counter</title>
     
         <!-- Custom Styles-->
-        <link rel="stylesheet" href="test.css">
+        <link rel="stylesheet" href="teststyle.css">
         
     </head>
 <body>
-     <!-- Manually Enter Data-->
+     <!-- Manually Enter Data for Food-->
+     <h1><center>Manual Calorie Counter Input</center></h1>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <div class="banner-info" align="center">
         <span><label><b>DATE: </b></label></span>
-        <span><input type="text" class="text-center" required="" placeholder="TODAY'S DATE" id="CustName"></span>
+        <span><input type="text" class="text-center" required="" placeholder="MM/DD/YYYY" id="CustName"></span>
         <span><label><b>MEAL:</b></label></span>
-        <span><input type="text" class="text-center" required="" placeholder="MEAL #" id="CustAdd"></span>
+        <span><input type="text" class="text-center" required="" placeholder="Meal Type" id="CustAdd"></span>
         <span><label><b>CALORIES:</b></label></span>
-        <span><input type="text" class="text-center" required="" placeholder="TOTAL CALORIES" id="CustTel"></span>
+        <span><input type="text" class="text-center" required="" placeholder="Total Calories" id="CustTel"></span>
     </div>
     <!-- "Add" Data Button-->
-    <div class="logo"><align="right">
-        <input type="button" onClick="insertData()" value="Add"></aligh="right">
+    <div class="logo"><h2>
+        <input type="button" onClick="insertData()" value="Add"></h2>
     </div>
      <!-- Calorie Counting Table-->
     <script language="javascript">
@@ -31,8 +32,8 @@
             $("#TableBody").html($("#TableBody").html() + "<tr><td>" + $("#CustName").val() + "</td><td>" + $("#CustAdd").val() + "</td><td>" + $("#CustTel").val() + "<td><tr>");
         }
     </script>
-    <table id="t1">
-        <caption>CALORIE COUNTER</caption>
+    <table id="t1"><center>
+        <caption>Manual Calorie Counter</caption>
         <colgroup>
             <col span="2" class="c2">
                 <col>
@@ -41,21 +42,20 @@
         <thead>
             <tr>
                 <th>
-                    DATE
+                    Date
                 </th>
                 <th>
-                    MEAL
+                    Meal
                 </th>
                 <th>
-                    CALORIES
+                    Calories
                 </th>
             </tr>
             
         </thead>
         <tbody id="TableBody">
-        </tbody>
+        </tbody></center>
     </table>
 </body>
 
 </html>
-PLEASE ENTER DATA ABOVE

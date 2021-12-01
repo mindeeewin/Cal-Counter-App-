@@ -1,0 +1,29 @@
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: left;
+}
+
+dd{
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+h2{
+    padding-right: 300px;
+    padding-left: 50px;
+    text-align: right;
+}
+
+.t1{
+    padding-left: 250px;
+
+}
+
+.TableBody{
+    background-color: darkgray;
+    text-align: center;
+    align-items: stretch;
+    padding-top: 15px;
+    
+
+}

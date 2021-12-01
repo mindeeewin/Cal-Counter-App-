@@ -1,9 +1,9 @@
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: left;
-    padding-top: 25px;
-    background-color: darkgreen;
-    color: black;
+    padding-top: 15px;
+    background-color: black;
+    color: darkgreen;
 }
 
 .background{
@@ -43,5 +43,16 @@ h2{
     align-items: stretch;
     padding-top: 15px;
 
-
 }
+
+.column {
+    float: left;
+    width: 33.33%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }

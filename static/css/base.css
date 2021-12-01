@@ -27,7 +27,7 @@ header[role="banner"] #logo-main {header[role="banner"] #logo-main {
   }
   #navbar-primary.navbar-default .navbar-nav > li > a > .active {
      width: 140px;
-      background: red;
+      background: rgb(97, 93, 93);
       border-radius: 100px ;
       color:  #18AD7C !important;
       text-align: center;

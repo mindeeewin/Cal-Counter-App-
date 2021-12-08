@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weekly Calorie Journal</title>
+    
+        <!-- Custom Styles-->
+        <link rel="stylesheet" href="teststyle.css">
+
+    </head>
+<body>
+    <!--Background Fixed Image-->
+    <div class="background"></div>
+
+     <!-- Submit Data for Food-->
+     <h1><center>Weekly Calorie Journal </center></h1>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <div class="banner-info" align="center">
+            <span><label><b>DATE: </b></label></span>
+            <span><input type="date" class="text-center" placeholder="MM/DD/YYYY" id="CustName"></span>
+            <span><label><b>FOOD ITEM:</b></label></span>
+            <span><input type="text" class="text-center" required="" placeholder="Food Type" id="CustAdd"></span>
+            <span><label><b>CALORIES:</b></label></span>
+            <span><input type="text" class="text-center" required="" placeholder="Total Calories" id="CustTel"></span>
+        </div>
+
+    <!-- "Add" Data Button-->
+    <div class="logo"><h2>
+        <input type="button" onClick="insertData()" value="Add"></h2>
+    </div>
+
+     <!-- Calorie Counting Table Starts-->
+    <script language="javascript">
+        function insertData() {
+            $("#TableBody").html($("#TableBody").html() + "<tr><td>" + $("#CustName").val() + "</td><td>" + $("#CustAdd").val() + "</td><td>" + $("#CustTel").val() + "<td><tr>");
+        }
+    </script>
+    <center><table id="t1">
+        <caption><b>Weekly Calorie Journal</b></caption>
+        <colgroup>
+            <col span="2" class="c2">
+                <col>
+                    <col class="row:after">
+        </colgroup>
+        <thead>
+            <tr>
+                <th><u>
+                    Date
+                </u></th>
+                <th><u>
+                    Meal
+                </u></th>
+                <th><u>
+                    Calories
+                </u></th>
+            </tr>
+        </thead>
+        <tbody id="TableBody">
+
+
+        </tbody></center>
+    </table>
+
+    <!--Nutrional Data Search Tool - building
+
+    <div class="nutrional-value-data">
+        <p class="nutrion-data"></p> 
+    </div>
+    -->
+
+    <script>
+
+        $(function() {
+         var _myContentArea = document.getElementById("myContentArea");
+         var _mySearchButton = document.getElementById("mySearchButton");
+         _mySearchButton.onclick = getData;
+ 
+         function getData(){
+         var _mySearchField = document.getElementById("mySearchField");
+             $.ajax({
+             url: "http://api.lmiforall.org.uk/api/v1/census/jobs_breakdown?area="+_mySearchField.value,
+            method: "GET",
+             dataType: "json",
+             success: function(data) {
+                 var str = "";          
+                for(var i= 0; i < data.jobsBreakdown.length; i++){
+ 
+                  str +='Job Title : '+data.jobsBreakdown[i].description+' <br> Total Number of People Engaged in Occupency : '+data.jobsBreakdown[i].value+' <br> Percentage of Occupancies in Area : '+data.jobsBreakdown[i].percentage.toPrecision(2)+'% <br><br>';
+                }
+               _myContentArea.innerHTML = str;
+             }
+             });
+         }
+ 
+     });
+     </script>
+
+<script type="text/javascript" src="calorielookup.js"></script>
+</body>
+
+</html>

@@ -15,81 +15,81 @@
     <div class="background"></div>
 
      <!-- Submit Data for Food-->
-     <h1><center>Weekly Calorie Journal </center></h1>
+     <h1><center> Calorie Journal </center></h1>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-            <form>
+        <div id="alert_placeholder"></div>    
+        <form>
                 <div class="banner-info" align="center">
                     <label><b>DATE: </b></label>
-                    <input type="date" class="text-center" placeholder="MM/DD/YYYY" id="custDate"></type>
+                    <input type="date" class="text-center" placeholder="MM/DD/YYYY" id="custDate" required></type>
                     <label><b>FOOD ITEM (100g): </b></label>
-                    <input type="text" class="text-center" placeholder="Food Type" id="custName"></type>
+                    <input type="text" class="text-center" placeholder="Food Type" id="custName" required></type>
                 </div>
             </form>
 
     <!-- "Add" Data Button-->
     <div class="logo">
         <h2><button><input type="button" class="btn btn-outline-success" onClick="insertData()" value="Add"></button></h2>
+        <h2><button><input type="button" class="btn btn-outline-success" onClick="generateData()" value="Generate CSV"></button></h2>
     </div>
+
     <!--Calorie Counting Table Starts-->
-   <!-- <table id="t1">
-        <colgroup>
-            <col span="2" class="c2">
-                <col>
-                    <col class="row:after">
-        </colgroup>
+    <table id="calorieTable" class="table table-hover" class="table-responsive">
         <thead>
             <tr>
-                <th><u>
-                    Date
-                </u></th>
-                <th><u>
-                    Meal
-                </u></th>
-                <th><u>
-                    Calories
-                </u></th>
+            <th scope="col"><u>DATE</u></th>
+            <th scope="col"><u>MEAL</u></th>
+            <th scope="col"><u>CALORIES</u></th>
             </tr>
         </thead>
-        <tbody id="TableBody">
+        <tbody id="displayFoodList">
+            <tr id="totalRow">
+                <td></td>
+                <td>Total</td>
+                <td id="totalCal"></td>
+            </tr>
         </tbody>
-    </table>-->
-
-
-<table id="calorieTable" class="table table-hover" class="table-responsive">
-    <thead>
-        <tr>
-        <th scope="col"><u>DATE</u></th>
-        <th scope="col"><u>MEAL</u></th>
-        <th scope="col"><u>CALORIES</u></th>
-        </tr>
-    </thead>
-    <tbody id="displayFoodList">
-        <tr id="totalRow">
-            <td></td>
-            <td>Total</td>
-            <td id="totalCal"></td>
-          </tr>
-    </tbody>
-
-</table>
-
-
+    </table>
 
 <!--Pulling API data for Food Calories Start-->
 <script language="javascript">
 
     const setCalorieStorage = () => {
-        let foodCaloriesHolder = []
-        localStorage.setItem('foodCalories', JSON.stringify(foodCaloriesHolder))
+        let foodCaloriesHolder = [];
+        localStorage.setItem('foodCalories', JSON.stringify(foodCaloriesHolder));
+        let calorieJournalHolder = [];
+        localStorage.setItem('calorieJournal', JSON.stringify(calorieJournalHolder));
     }
     //Save Food Cal on Local Storage 
     const insertData = async () => {
-        const calorieResponse = await getCaloriesForFoodItem();
+        const calorieResponse = await getCaloriesForFoodItem();      
+        if (calorieResponse.length === 0) {
+            let alertList = document.getElementById("alert_placeholder");
+            let template = ``;
+            template += `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Food item not found :(
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>`;
+            alertList.innerHTML = template;
+        }
         let calories = calorieResponse[0].calories
         foodCaloriesHolder = JSON.parse(localStorage.getItem('foodCalories'));
+
+        let calorieJournalHolder = JSON.parse(localStorage.getItem('calorieJournal'));
+        let calorieJournalObject = {};
+        calorieJournalObject['date'] = document.getElementById('custDate').value;
+        calorieJournalObject['name'] = document.getElementById('custName').value;
+        calorieJournalObject['calories'] = calories;
+        calorieJournalHolder.push(calorieJournalObject);
+
+        localStorage.setItem('calorieJournal', JSON.stringify(calorieJournalHolder))
+
         foodCaloriesHolder.push(calories)
         localStorage.setItem('foodCalories', JSON.stringify(foodCaloriesHolder))
         insertRow(calorieResponse[0].calories)
@@ -103,12 +103,21 @@
         let cell2 = row.insertCell(1);
         let cell3 = row.insertCell(2);
         cell1.innerHTML = document.getElementById('custDate').value;
-        cell2.innerHTML = document.getElementById('custName').value;
+        cell2.innerHTML = (document.getElementById('custName').value).charAt(0).toUpperCase() + (document.getElementById('custName').value).slice(1);;
         cell3.innerHTML = calories;
 
         let getTotalCalories = computeTotalCalories();
         let totalCell = document.getElementById("totalCal");
         totalCell.innerHTML = getTotalCalories;
+
+        let calorieJournalHolder = JSON.parse(localStorage.getItem('calorieJournal'));
+        let calorieJournalObject = {};
+        calorieJournalObject['date'] = ``;
+        calorieJournalObject['name'] = 'Total';
+        calorieJournalObject['calories'] = getTotalCalories;
+        calorieJournalHolder.push(calorieJournalObject);
+        localStorage.setItem('calorieJournal', JSON.stringify(calorieJournalHolder))
+
         document.getElementById('custDate').value = ``;
         document.getElementById('custName').value = ``;
     }
@@ -127,8 +136,38 @@
 
     const computeTotalCalories = () => {
         let computeCalories = JSON.parse(localStorage.getItem('foodCalories'));
-        let totalCalories = computeCalories.reduce((a, b) => a + b, 0); //Total Sumation of Cal 
+        let totalCalories = parseFloat(computeCalories.reduce((a, b) => a + b, 0)); //Total Summation of Cal 
         return totalCalories;
+    }
+
+    const generateData = () => {
+        let items = JSON.parse(localStorage.getItem('calorieJournal'));
+        let csv = ``;
+        csv += `Date, Food, Calorie\r\n`
+        for (let row = 0; row < (items.length); row++) {
+            let keysAmount = Object.keys(items[row]).length
+            let keysCounter = 0
+            for(let key in items[row]) {
+                csv += items[row][key] + (keysCounter + 1 < keysAmount ? ',' : '\r\n') 
+            keysCounter++
+            }}
+            let link = document.createElement("a");
+            link.id = "download-csv";
+            link.setAttribute("href","data:text/plain;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download",`${new Date().toLocaleDateString()}-BSI-data-export.csv`);
+            document.body.appendChild(link);
+            document.querySelector("#download-csv").click();
+            document.body.removeChild(link);
+            let alertList = document.getElementById("alert_placeholder");
+            let template = ``;
+            template += `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Success!
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>`;
+            alertList.innerHTML = template;
     }
 
    

@@ -10,11 +10,11 @@
     <!-- Custom Styles-->
     <link rel="stylesheet" href="foodjournalstyle.css">
 </head>
+<!--Save Food Item Input into Local Stoage-->
 <body onload="setCalorieStorage()">
  <!--Background Fixed Image-->
     <div class="background"></div>
-
-     <!-- Submit Data for Food-->
+     <!-- Submit Data for Food Start-->
      <h1><center> Calorie Journal </center></h1>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -29,11 +29,11 @@
                     <input type="text" class="text-center" placeholder="Food Type" id="custName" required></type>
                 </div>
             </form>
+        <!--Submit Data For Food End-->
 
     <!-- "Add" Data Button-->
     <div class="logo">
         <h2><button><input type="button" class="btn btn-outline-success" onClick="insertData()" value="Add"></button></h2>
-        <h2><button><input type="button" class="btn btn-outline-success" onClick="generateData()" value="Generate CSV"></button></h2>
     </div>
 
     <!--Calorie Counting Table Starts-->
@@ -53,17 +53,23 @@
             </tr>
         </tbody>
     </table>
+    <!-- Calorie Counting Table Ends-->
 
-<!--Pulling API data for Food Calories Start-->
+    <!--"Generate CSV" File Button-->
+    <div>
+        <h2><button><input type="button" class="btn btn-outline-success" onClick="generateData()" value="Generate CSV"></button></h2>
+    </div>
+
+<!--Start of JS within Code for Input of Calories-->
 <script language="javascript">
-
+    //API pulling data for Food Item Input, Cal Recived Start
     const setCalorieStorage = () => {
         let foodCaloriesHolder = [];
         localStorage.setItem('foodCalories', JSON.stringify(foodCaloriesHolder));
         let calorieJournalHolder = [];
         localStorage.setItem('calorieJournal', JSON.stringify(calorieJournalHolder));
     }
-    //Save Food Cal on Local Storage 
+    //Obtain Cals of Input Food Item; Call to action if Food Item not found
     const insertData = async () => {
         const calorieResponse = await getCaloriesForFoodItem();      
         if (calorieResponse.length === 0) {
@@ -80,7 +86,7 @@
         }
         let calories = calorieResponse[0].calories
         foodCaloriesHolder = JSON.parse(localStorage.getItem('foodCalories'));
-
+        //Journal Holder API to save onto Local Storage 
         let calorieJournalHolder = JSON.parse(localStorage.getItem('calorieJournal'));
         let calorieJournalObject = {};
         calorieJournalObject['date'] = document.getElementById('custDate').value;
@@ -95,7 +101,7 @@
         insertRow(calorieResponse[0].calories)
         
     }
-    //Add Additional Row with Food Type Input
+    //Additional Row Added with Food Type Input on Cal. Counting Table
     const insertRow = (calories) => {
         let table = document.getElementById("displayFoodList");
         let row = table.insertRow(0);
@@ -105,7 +111,7 @@
         cell1.innerHTML = document.getElementById('custDate').value;
         cell2.innerHTML = (document.getElementById('custName').value).charAt(0).toUpperCase() + (document.getElementById('custName').value).slice(1);;
         cell3.innerHTML = calories;
-
+        //Compute Total Cal for Food Type Input
         let getTotalCalories = computeTotalCalories();
         let totalCell = document.getElementById("totalCal");
         totalCell.innerHTML = getTotalCalories;
@@ -121,7 +127,7 @@
         document.getElementById('custDate').value = ``;
         document.getElementById('custName').value = ``;
     }
-    //Recieve Data form API 
+    //Recieve Data form API of Food Type Input 
     const getCaloriesForFoodItem = async () => {
         const a = document.getElementById('custName').value;
         console.log('a', a)
@@ -133,13 +139,13 @@
 
         return await response.json();
     }
-
+    // Total Summation of Calories in Cal. Counting Table
     const computeTotalCalories = () => {
         let computeCalories = JSON.parse(localStorage.getItem('foodCalories'));
-        let totalCalories = parseFloat(computeCalories.reduce((a, b) => a + b, 0)); //Total Summation of Cal 
+        let totalCalories = parseFloat(computeCalories.reduce((a, b) => a + b, 0)); 
         return totalCalories;
     }
-
+    //Stores data of Cal. Counting Table to generate CSV file export
     const generateData = () => {
         let items = JSON.parse(localStorage.getItem('calorieJournal'));
         let csv = ``;
@@ -165,9 +171,9 @@
                     Success!
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
-                            </button>
+                            </button> 
                     </div>`;
-            alertList.innerHTML = template;
+            alertList.innerHTML = template;// Sucess Banner if Food Type Input is True 
     }
 
    

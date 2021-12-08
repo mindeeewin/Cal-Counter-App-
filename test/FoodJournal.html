@@ -23,7 +23,7 @@
         <div class="banner-info" align="center">
             <span><label><b>DATE: </b></label></span>
             <span><input type="date" class="text-center" placeholder="MM/DD/YYYY" id="CustName"></span>
-            <span><label><b>FOOD ITEM:</b></label></span>
+            <span><label><b>FOOD ITEM(100g):</b></label></span>
             <span><input type="text" class="text-center" required="" placeholder="Food Type" id="CustAdd"></span>
             <!-- <span><label><b>CALORIES:</b></label></span>
             <span><input type="text" class="text-center" required="" placeholder="Add Calories" id="CustTel"></span> -->
@@ -39,11 +39,11 @@
         const insertData = async () => {
             const calorieResponse = await getCaloriesForFoodItem();
 
-            console.log('calorieResponse', calorieResponse[0].calories)
+            console.log('calorieResponse', calorieResponse)
 
 
 
-            $("#TableBody").html($("#TableBody").html() + "<tr><td>" + $("#CustName").val() + "</td><td>" + $("#CustAdd").val() + "</td><td>" + $("#CustTel").val() + "<td><tr>");
+            $("#TableBody").html($("#TableBody").html() + "<tr><td>" + $("#CustName").val() + "</td><td>" + $("#CustAdd").val() + "</td><td>" + calorieResponse[0].calories + "<td><tr>");
         }
 
         const getCaloriesForFoodItem = async () => {
@@ -60,8 +60,8 @@
 
         console.log('helllooooooo')
     </script>
-    <center><table id="t1">
-        <caption><b>Weekly Calorie Journal</b></caption>
+    <!--Table of Complied Cal Count-->
+    <table id="t1">
         <colgroup>
             <col span="2" class="c2">
                 <col>
@@ -81,11 +81,11 @@
             </tr>
         </thead>
         <tbody id="TableBody">
-        </tbody></center>
+        </tbody>
     </table>
 
 
-    <!--Nutrional Data Search Tool - building
+<!--Nutrional Data Search Tool - building
 
     <div class="nutrional-value-data">
         <p class="nutrion-data"></p> 

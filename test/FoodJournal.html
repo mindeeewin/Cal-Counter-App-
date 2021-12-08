@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Weekly Calorie Journal</title>
     
     <!-- Custom Styles-->
@@ -16,13 +17,16 @@
      <!-- Submit Data for Food-->
      <h1><center>Weekly Calorie Journal </center></h1>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <div class="banner-info" align="center">
             <span><label><b>DATE: </b></label></span>
             <span><input type="date" class="text-center" placeholder="MM/DD/YYYY" id="CustName"></span>
             <span><label><b>FOOD ITEM:</b></label></span>
             <span><input type="text" class="text-center" required="" placeholder="Food Type" id="CustAdd"></span>
-            <span><label><b>CALORIES:</b></label></span>
-            <span><input type="text" class="text-center" required="" placeholder="Add Calories" id="CustTel"></span>
+            <!-- <span><label><b>CALORIES:</b></label></span>
+            <span><input type="text" class="text-center" required="" placeholder="Add Calories" id="CustTel"></span> -->
         </div>
 
     <!-- "Add" Data Button-->
@@ -32,9 +36,29 @@
 
      <!-- Calorie Counting Table Starts-->
     <script language="javascript">
-        function insertData() {
+        const insertData = async () => {
+            const calorieResponse = await getCaloriesForFoodItem();
+
+            console.log('calorieResponse', calorieResponse[0].calories)
+
+
+
             $("#TableBody").html($("#TableBody").html() + "<tr><td>" + $("#CustName").val() + "</td><td>" + $("#CustAdd").val() + "</td><td>" + $("#CustTel").val() + "<td><tr>");
         }
+
+        const getCaloriesForFoodItem = async () => {
+            const a = document.getElementById('CustAdd').value;
+            console.log('a', a)
+            const response = await fetch (`https://api.api-ninjas.com/v1/nutrition?query=${a}`, {
+                method: "GET",
+                headers:  { 'X-Api-Key': 'T3RdfpebuPAxVxdbA5AuUvcQgBbKHPLJiidRx0ba'},
+                contentType: 'application/json',
+            });
+
+            return await response.json();
+        }
+
+        console.log('helllooooooo')
     </script>
     <center><table id="t1">
         <caption><b>Weekly Calorie Journal</b></caption>

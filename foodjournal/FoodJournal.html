@@ -16,6 +16,11 @@
     <div class="background"></div>
      <!-- Submit Data for Food Start-->
      <h1> Calorie Counting </h1>
+     <h3> 1) Start by selecting a date below by clicking the calendar icon.</h3>
+     <h3> 2) Once date has been selected, enter food item/100grams. (ie. eggs)</h3>
+     <h3> 3) Press "Add" button once complete. *Do not press enter*</h3>
+     <h3> 4) .csv file available for download.</h3>
+     <br>
         <div id="alert_placeholder"></div>    
         <form>
                 <div class="banner-info">
@@ -44,16 +49,16 @@
         <tbody id="displayFoodList">
             <tr id="totalRow">
                 <td></td>
-                <td>Total</td>
+                <td>Total Calories=</td>
                 <td id="totalCal"></td>
             </tr>
         </tbody>
     </table>
     <!-- Calorie Counting Table Ends-->
 
-    <!--"Export CSV" File Button-->
+    <!--"Generate CSV" File Button-->
     <div>
-        <h2><button><input type="button" class="btn btn-outline-success" onClick="generateData()" value="Export CSV"></button></h2>
+        <h2><button><input type="button" class="btn btn-outline-success" onClick="generateData()" value="Generate CSV"></button></h2>
     </div>
     <!-- Snowflake styling-->
     <div class="snowflakes" aria-hidden="true">
@@ -208,7 +213,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button> 
                     </div>`;
-            alertList.innerHTML = template;// Sucess Banner once CSV exported 
+            alertList.innerHTML = template;// Sucess Banner if Food Type Input is True 
     }
 
    

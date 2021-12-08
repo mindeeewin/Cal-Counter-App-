@@ -70,6 +70,33 @@
     </div>
     -->
 
+    <script>
+
+        $(function() {
+         var _myContentArea = document.getElementById("myContentArea");
+         var _mySearchButton = document.getElementById("mySearchButton");
+         _mySearchButton.onclick = getData;
+ 
+         function getData(){
+         var _mySearchField = document.getElementById("mySearchField");
+             $.ajax({
+             url: "http://api.lmiforall.org.uk/api/v1/census/jobs_breakdown?area="+_mySearchField.value,
+            method: "GET",
+             dataType: "json",
+             success: function(data) {
+                 var str = "";          
+                for(var i= 0; i < data.jobsBreakdown.length; i++){
+ 
+                  str +='Job Title : '+data.jobsBreakdown[i].description+' <br> Total Number of People Engaged in Occupency : '+data.jobsBreakdown[i].value+' <br> Percentage of Occupancies in Area : '+data.jobsBreakdown[i].percentage.toPrecision(2)+'% <br><br>';
+                }
+               _myContentArea.innerHTML = str;
+             }
+             });
+         }
+ 
+     });
+     </script>
+
 <script type="text/javascript" src="calorielookup.js"></script>
 </body>
 

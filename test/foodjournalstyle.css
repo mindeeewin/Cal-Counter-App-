@@ -2,7 +2,7 @@ body{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: left;
     padding-top: 15px;
-    background-color:thistle;
+    background-color:rgb(255, 255, 255);
     color: darkgreen;
 }
 
@@ -55,4 +55,12 @@ h2{
     content: "";
     display: table;
     clear: both;
+  }
+
+  .banner-info {
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    text-align: center;
+
   }
